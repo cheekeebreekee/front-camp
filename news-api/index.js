@@ -8,9 +8,9 @@ const buildUrl = (source) => `https://newsapi.org/v2/top-headlines?sources=${sou
 
 const parseJSON = (data) => data.json();
 
-const parseData = (data) => data.articles.map((el) => el);
+const parseData = (data) => data.articles.map((el) => Object.keys(el).splice(1).map((article) => console.log(`${article}:${el[article]}`)));
 
 fetch(buildUrl(source))
   .then((response) => parseJSON(response))
-  .then((data) => console.log(data))
+  .then((data) => console.log(parseData(data)))
   .catch((err) => console.log(err));
