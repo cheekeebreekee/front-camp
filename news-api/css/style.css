@@ -50,6 +50,7 @@ a {
   left: 50%;
   top: -3px;
   font-size: 10px;
+  font-family: 'Open Sans';
   font-weight: 700;
   transform: translate(-50%, 0);
 }
