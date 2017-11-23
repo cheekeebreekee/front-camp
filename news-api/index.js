@@ -1,11 +1,11 @@
-const source = `bloomberg`;
+const source = `abc-news`;
 //bbc-sport
 //cbc-news
 //bbc-news
 //bloomberg
 //abc-news
 const buildUrl = (source) => `https://newsapi.org/v2/top-headlines?sources=${source}&apiKey=8a327229878e4966995d6ef0bbb5e280`;
-
+const customImageUrl = `http://bydesignvsm.com/wp-content/uploads/2015/06/Black-Background-HD-Wallpaper-24.jpg`;
 const parseJSON = (data) => data.json();
 
 const getYear = (date) => date.split('-')[0];
@@ -22,7 +22,7 @@ const parseData = (data) => data.articles.map((el) =>  {
   const customDate = new Date().toISOString().slice(0,10).toString();
   const newsCard = `
     <div class="news-card">
-      <img class="news-card__img" src="${el.urlToImage}" alt="">
+      <img class="news-card__img" src="${el.urlToImage || customImageUrl}" alt="News Article Image">
       <div class="news-card__wrapper">
         <div class="news-card__header">
           <div class="news-card__date">

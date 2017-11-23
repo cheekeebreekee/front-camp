@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+html {
+  background-color: #172727;
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -22,9 +26,11 @@ a {
 }
 
 .news-card {
+  position: relative;
   float: left;
   padding: 0 30px;
   width: 500px;
+  margin-bottom: 30px;
 }
 .news-card__content {
   margin: 0;
@@ -52,6 +58,17 @@ a {
   font-family: 'Open Sans';
   font-weight: 700;
   transform: translate(-50%, 0);
+}
+.news-card__img {
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - 60px);
+  height: 100%;
+  filter: brightness(70%);
+  transition: filter .15s ease-in;
+}
+.news-card:hover .news-card__img {
+  filter: brightness(100%);
 }
 .news-card__wrapper {
   padding: 0 15px;
@@ -102,7 +119,9 @@ a {
   transform: translateY(-60px);
 }
 .news-card__wrapper {
-  background: url('https://tvseriescritic.files.wordpress.com/2016/10/stranger-things-bicycle-lights-children.jpg') center/cover no-repeat;
+  /*background: url('https://tvseriescritic.files.wordpress.com/2016/10/stranger-things-bicycle-lights-children.jpg') center/cover no-repeat;*/
+  background-color: transparent;
+  z-index: 2;
 }
 .news-card__wrapper:hover .news-card__content span {
   transform: translate(-50%, -10px);
