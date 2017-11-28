@@ -1,0 +1,124 @@
+$(function () {
+  // variable for sticky items
+  var $stickyItems = $('#support-bar, #new-social-share');
+
+  // height of header (if it's doesn't exist on page will be equal to 0)
+  var headerHeight = $('#header-container').outerHeight(true) || 0;
+  var breadcrumbsHeight = $('#trail').outerHeight(true) || 0;
+
+  // height of slider (if it's doesn't exist on page will be equal to 0)
+  var sliderHeight = $('.slider-new').height() || 0;
+
+  // sticky socials section
+  var $socialsSection = $('#new-social-share');
+
+  // sticky contact button
+  var $contactBtn = $('#support-bar');
+
+  // footer container
+  var $footerContainer = $('.footer-container');
+
+  // additional height of stick if country selector is opened
+  var additionalHeaderHeight = 0;
+
+  // full height of slider and header to calculate position for sticking
+  var fullHeight =  sliderHeight + (additionalHeaderHeight || 0);
+  var stickyArr = Array.prototype.slice.call($stickyItems);
+
+  //.header-top-country-selector - old country-selector trigger for backward compatability,
+  // delete when all locales move to new country-selector version
+  var $countrySelectorTrigger = $('.js-open-country-select, .header-top-country-selector');
+
+  // top position of social section when it's stop sticking
+  var socialStopPosition = $socialsSection.length ? $socialsSection.position().top + $socialsSection.outerHeight(true) : 0;
+
+  // top position of contact button when it's stop sticking
+  var contactStopPosition = $contactBtn.length ? $contactBtn.position().top + $contactBtn.outerHeight(true) : 0;
+
+  // top position of footer
+  var footerTopPosition = $footerContainer.position().top;
+
+  // offset from breadcrumbs to prevent close distance with header
+  var offsetFromBreadcrumbs = 40;
+
+  // total stick position
+  var offsetTop = headerHeight + breadcrumbsHeight + offsetFromBreadcrumbs;
+
+  // var isSticked = false;
+
+  // initial position of stick after page loading
+  $stickyItems.css({
+    'position': 'absolute',
+    'top': headerHeight + sliderHeight + breadcrumbsHeight + offsetFromBreadcrumbs + 'px'
+  });
+
+  //TODO: remove this function and use it from country-select.js or move it to SE_APP class
+  function whichTransitionEvent() {
+    var t;
+    var el = document.createElement('fakeelement');
+    var transitions = {
+      'transition': 'transitionend',
+      'OTransition': 'oTransitionEnd',
+      'MozTransition': 'transitionend',
+      'WebkitTransition': 'webkitTransitionEnd'
+    };
+    for (t in transitions) {
+      if (el.style[t] !== undefined) {
+        return transitions[t];
+      }
+    }
+  }
+
+  var transitionEvent = whichTransitionEvent();
+
+  // this function add additional stick position (after animation) in case if country selector is opened to prevent overlaying socials sections and contact button
+  $countrySelectorTrigger.on('click', function (e) {
+    e.preventDefault();
+    var self = this;
+    SE_APP.body.one(transitionEvent, function () {
+      additionalHeaderHeight = $(self).hasClass('active') ? 183 : 0;
+      // if (!isSticked) {
+      //   additionalHeaderHeight = -183;
+      // }
+      stickyArr.map(function (el) {
+        $(el).css('top', ($(el).position().top + additionalHeaderHeight) + 'px');
+      });
+      stickSocials();
+    });
+  });
+
+  // function which track when socials section and cotnact button are sticking or not
+  function stickSocials() {
+    // current scroll position
+    var scrollPosition = $(window).scrollTop();
+
+    // current position of socials section
+    socialStopPosition = $socialsSection.length ? $socialsSection.position().top + $socialsSection.outerHeight(true) : 0;
+
+    // current position of contact button
+    contactStopPosition = $contactBtn.length ? $contactBtn.position().top + $contactBtn.outerHeight(true) : 0;
+    footerTopPosition = $footerContainer.position().top;
+    // total offset of sticky (100 is just bottom offset from footer)
+    var totalOffset = footerTopPosition - additionalHeaderHeight - 100;
+    var totalPosition = scrollPosition + additionalHeaderHeight + offsetTop;
+
+    // isSticked = socialStopPosition < totalOffset || scrollPosition + $socialsSection.outerHeight(true) + offsetTop < totalOffset ? true : false;
+
+    // if we scrolled header and slider
+    if (scrollPosition > fullHeight) {
+      // check if position of socials section or contact button greater than top position of footer, we stop sticking. If not, we continue stick our socials section and contact button
+      if (socialStopPosition < totalOffset || scrollPosition + $socialsSection.outerHeight(true) + offsetTop < totalOffset) {
+        $socialsSection.css('top', totalPosition + 'px');
+      }
+      if (contactStopPosition < totalOffset || scrollPosition + $contactBtn.outerHeight(true) + offsetTop < totalOffset) {
+        $contactBtn.css('top', totalPosition + 'px');
+      }
+    }
+  }
+
+  $(window).on('scroll', stickSocials);
+  SE_APP.body.on('desktopToMobile', stickSocials);
+});
+
+
+.mega-menu>.mega-menu-items>.mega-menu-item*5>h4.mega-menu-item__title+a.mega-menu-item__link+.mega-menu-category-wrapper>.mega-menu-category>a.mega-menu-category__title+.mega-menu-category__links>a.mega-menu-category__link
