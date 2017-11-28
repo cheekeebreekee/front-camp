@@ -2,7 +2,6 @@ import { baseUrl, apiKey } from '../constants.js';
 
 export default class HttpClient {
   constructor() {
-    this.url = baseUrl;
     this.params = '';
   }
 

@@ -44,6 +44,28 @@ a {
   padding: 10px;
 }
 
+.copyright {
+  color: #fff;
+  float: right;
+  margin-right: 20px;
+}
+
+.copyright a {
+  color: #8e835c;
+}
+
+@media (max-width: 500px) {
+  .copyright {
+    float: none;
+    text-align: center;
+    margin: 10px 0;
+  }
+  .news-list {
+    margin: 0;
+    width: 100%;
+  }
+}
+
 .news-card {
   position: relative;
   float: left;
