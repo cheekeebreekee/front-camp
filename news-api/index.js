@@ -8,17 +8,16 @@ const httpClient = new HttpClient();
 const newsSourcesRenderer = new Renderer(newsSourcesContainerId, getNewsSourceTemplate);
 const newsItemsRenderer = new Renderer(newsItemsContainerId, getNewsCardTemplate);
 const newsSourcesContainer = document.querySelector(newsSourcesContainerId);
-const newsSourcesObserver = new ViewObserver(httpClient, '/sources', newsSourcesRenderer, 'sources');
+const viewObserver = new ViewObserver(httpClient);
 
-newsSourcesObserver.updateView();
+viewObserver.updateView('/sources', newsSourcesRenderer, 'sources');
 
 const clickHandler = (event) => {
   const requestParams = {
     'sources': event.target.value
   }
-  const newsItemsObserver = new ViewObserver(httpClient, '/top-headlines', newsItemsRenderer, 'articles', requestParams);
   newsItemsRenderer.clearContainer();
-  newsItemsObserver.updateView();
+  viewObserver.updateView('/top-headlines', newsItemsRenderer, 'articles', requestParams);
 }
 
 newsSourcesContainer.addEventListener('change', clickHandler);
