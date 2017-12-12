@@ -1,4 +1,4 @@
-import { getYear, getMonth, getDay, getNewsCardTemplate, getNewsSourceTemplate } from '../utils.js';
+import { getYear, getMonth, getDay, getNewsCardTemplate, getNewsSourceTemplate } from './utils.js';
 
 export default class Renderer {
   constructor(containerId, templateHandler) {

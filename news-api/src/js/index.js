@@ -1,6 +1,8 @@
-import Renderer from './components/Renderer.js';
-import HttpClient from './components/HttpClient.js';
-import ViewObserver from './components/ViewObserver.js';
+import 'babel-polyfill';
+import 'whatwg-fetch';
+import Renderer from './Renderer.js';
+import HttpClient from './HttpClient.js';
+import ViewObserver from './ViewObserver.js';
 import { parseJSON, getNewsCardTemplate, getNewsSourceTemplate } from './utils.js';
 import { newsSourcesContainerId, newsItemsContainerId } from './constants.js';
 

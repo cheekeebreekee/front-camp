@@ -7,8 +7,8 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const paths = {
   dist: path.resolve(__dirname, 'dist'),
   src: path.resolve(__dirname, 'src'),
-  js: path.resolve(__dirname, 'src/js'),
-  scss: path.resolve(__dirname, 'src/scss')
+  js: path.resolve(__dirname, 'src/index.js'),
+  scss: path.resolve(__dirname, 'scss/style.scss')
 };
 
 const extractSass = new ExtractTextPlugin({
@@ -18,7 +18,7 @@ const extractSass = new ExtractTextPlugin({
 
 const config = {
   entry: {
-    app: path.join(paths.js, 'index.js')
+    app: path.join(paths.js, '../index.js')
   },
   output: {
     path: paths.dist,
@@ -28,7 +28,7 @@ const config = {
   plugins: [
     new CleanWebpackPlugin([paths.dist]),
     new HtmlWebpackPlugin({
-      template: path.join(paths.src, 'index.html'),
+      template: path.join(paths.src, '../index.html'),
       minify: {
         collapseWhitespace: true
       }
@@ -55,7 +55,7 @@ const config = {
                   autoprefixer: {
                     add: true,
                     remove: true,
-                    browsers: ['last 2 versions'],
+                    browsers: ['last 3 versions'],
                   },
                   discardComments: {
                     removeAll : true,
@@ -77,6 +77,17 @@ const config = {
           fallback: 'style-loader'
         })
       },
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 4096
+            }
+          }
+        ]
+      }
     ]
   }
 };

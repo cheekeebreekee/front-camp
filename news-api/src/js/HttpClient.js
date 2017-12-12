@@ -1,4 +1,4 @@
-import { baseUrl, apiKey } from '../constants.js';
+import { baseUrl, apiKey } from './constants.js';
 
 export default class HttpClient {
   constructor() {

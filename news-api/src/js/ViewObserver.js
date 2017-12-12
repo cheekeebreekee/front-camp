@@ -1,4 +1,4 @@
-import { parseJSON } from '../utils.js';
+import { parseJSON } from './utils.js';
 
 export default class ViewObserver {
   constructor (httpClient, ) {
