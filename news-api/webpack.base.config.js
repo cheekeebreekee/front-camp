@@ -5,11 +5,10 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const paths = {
-  DIST: path.resolve(__dirname, 'dist'),
-  SRC: path.resolve(__dirname, 'src'),
-  JS: path.resolve(__dirname, 'src/js'),
-  SCSS: path.resolve(__dirname, 'src/scss'),
-  PUBLISH: path.resolve(__dirname, '../production')
+  dist: path.resolve(__dirname, 'dist'),
+  src: path.resolve(__dirname, 'src'),
+  js: path.resolve(__dirname, 'src/index.js'),
+  scss: path.resolve(__dirname, 'scss/style.scss')
 };
 
 const extractSass = new ExtractTextPlugin({
@@ -19,17 +18,17 @@ const extractSass = new ExtractTextPlugin({
 
 const config = {
   entry: {
-    app: path.join(paths.JS, 'index.js')
+    app: path.join(paths.js, '../index.js')
   },
   output: {
-    path: paths.DIST,
+    path: paths.dist,
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js'
   },
   plugins: [
-    new CleanWebpackPlugin([paths.DIST]),
+    new CleanWebpackPlugin([paths.dist]),
     new HtmlWebpackPlugin({
-      template: path.join(paths.SRC, 'index.html'),
+      template: path.join(paths.src, '../index.html'),
       minify: {
         collapseWhitespace: true
       }
@@ -38,7 +37,6 @@ const config = {
   ],
   module: {
     rules: [
-      // Babel loader
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -46,7 +44,6 @@ const config = {
           loader: 'babel-loader'
         }
       },
-      // Loader for SCSS/CSS files
       {
         test: /\.scss$/,
         use: extractSass.extract({
@@ -58,7 +55,7 @@ const config = {
                   autoprefixer: {
                     add: true,
                     remove: true,
-                    browsers: ['last 2 versions'],
+                    browsers: ['last 3 versions'],
                   },
                   discardComments: {
                     removeAll : true,
@@ -74,20 +71,19 @@ const config = {
               loader: 'sass-loader',
               options: {
                 sourceMap: true,
-                includePaths: [paths.SCSS]
+                includePaths: [paths.scss]
               }
           }],
           fallback: 'style-loader'
         })
       },
-      // URL loader
       {
         test: /\.(png|jpg|gif)$/,
         use: [
           {
             loader: 'url-loader',
             options: {
-              limit: 8192
+              limit: 4096
             }
           }
         ]

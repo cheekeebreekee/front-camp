@@ -1,15 +1,14 @@
 {
-  "name": "news-feed-babel",
+  "name": "webpack-news-feed",
   "version": "1.0.0",
-  "description": "newsFeed example with babel",
-  "main": "index.js",
-  "repository": "git@github.com:aibolik/news-feed-babel.git",
-  "author": "Aibol Kussain <aibolikdev@gmail.com>",
+  "description": "webpack-news-feed",
+  "main": "src/index.js",
+  "repository": "",
+  "author": "Yahor Simak",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --color --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js",
-    "watcher-css": "scss --watch scss:css"
+    "start": "webpack-dev-server --color --config webpack.dev.config.js",
+    "build": "webpack --config webpack.prod.config.js"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.0",
