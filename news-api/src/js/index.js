@@ -1,5 +1,4 @@
-import 'babel-polyfill';
-import 'whatwg-fetch';
+import '../scss/style.scss';
 import Renderer from './Renderer.js';
 import HttpClient from './HttpClient.js';
 import ViewObserver from './ViewObserver.js';
