@@ -55,15 +55,11 @@ const config = {
                   autoprefixer: {
                     add: true,
                     remove: true,
-                    browsers: ['last 2 versions'],
+                    browsers: ['last 3 versions'],
                   },
                   discardComments: {
                     removeAll : true,
                   },
-                  discardUnused: false,
-                  mergeIdents: false,
-                  reduceIdents: false,
-                  safe: true,
                   sourcemap: true,
                 }
               }
