@@ -10,15 +10,20 @@ const newsSourcesRenderer = new Renderer(newsSourcesContainerId, getNewsSourceTe
 const newsItemsRenderer = new Renderer(newsItemsContainerId, getNewsCardTemplate);
 const newsSourcesContainer = document.querySelector(newsSourcesContainerId);
 const viewObserver = new ViewObserver(httpClient);
+const newsLoadBtn = document.querySelector('.load-news-btn');
 
 viewObserver.updateView('/sources', newsSourcesRenderer, 'sources');
 
-const clickHandler = (event) => {
+const uploadNewsListAssets = () => {
+  const sourceList = document.querySelector('.news-list');
   const requestParams = {
-    'sources': event.target.value
+    'sources': sourceList.options[sourceList.selectedIndex].value
   }
+  require.ensure([], (require) => {
+    require('../scss/news-list.scss');
+  }, null, 'news-list');
   newsItemsRenderer.clearContainer();
   viewObserver.updateView('/top-headlines', newsItemsRenderer, 'articles', requestParams);
 }
 
-newsSourcesContainer.addEventListener('change', clickHandler);
+newsLoadBtn.addEventListener('click', uploadNewsListAssets);
