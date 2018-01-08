@@ -1,14 +1,18 @@
 import { parseJSON } from './utils.js';
+import { createStore } from './redux.js';
+import { dispatch } from './redux.js';
+import { actions } from './reducers.js';
 
 export default class ViewObserver {
-  constructor (httpClient, ) {
+  constructor (httpClient) {
     this.httpClient = httpClient;
   }
 
-  updateView(path, renderer, dataProp, requestParams = {}) {
+  updateView(path, requestParams = {}, store, action) {
     this.httpClient.get(path, requestParams)
         .then((response) => parseJSON(response))
-        .then((data) => renderer.render(data[dataProp]))
+        .then((data) => store.dispatch(action(data)))
         .catch((err) => console.log(err));
+    
   }
 }

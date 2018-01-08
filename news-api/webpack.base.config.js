@@ -27,7 +27,7 @@ const config = {
   },
   plugins: [
     new CleanWebpackPlugin([paths.dist]),
-    new HtmlWebpackPlugin({
+    new HtmlWebpackPlugin({ 
       template: path.join(paths.src, 'index.html'),
       minify: {
         collapseWhitespace: true

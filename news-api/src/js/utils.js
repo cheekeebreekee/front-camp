@@ -42,4 +42,11 @@ export const getNewsCardTemplate = ({ urlToImage, publishedAt, author, title, de
   `;
 }
 
+export const renderTemplateData = (containerId, templateHandler, partOfState) => {
+  return (state) => {
+    const container = document.querySelector(containerId);
+    state[partOfState].forEach((el) => container.insertAdjacentHTML('afterbegin', templateHandler(el)));
+  }
+}
+
 export const getNewsSourceTemplate = ({ id, name }) => `<option value="${id}" class="news-list__item">${name}</ption>`;

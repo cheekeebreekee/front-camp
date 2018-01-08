@@ -1,18 +1,19 @@
 import '../scss/style.scss';
-import Renderer from './Renderer.js';
 import HttpClient from './HttpClient.js';
 import ViewObserver from './ViewObserver.js';
-import { parseJSON, getNewsCardTemplate, getNewsSourceTemplate } from './utils.js';
+import { getNewsCardTemplate, getNewsSourceTemplate, renderTemplateData } from './utils.js';
 import { newsSourcesContainerId, newsItemsContainerId } from './constants.js';
+import { createStore } from './redux.js';
+import reducer, { actions } from './reducers.js';
 
+const store = createStore(reducer);
 const httpClient = new HttpClient();
-const newsSourcesRenderer = new Renderer(newsSourcesContainerId, getNewsSourceTemplate);
-const newsItemsRenderer = new Renderer(newsItemsContainerId, getNewsCardTemplate);
 const newsSourcesContainer = document.querySelector(newsSourcesContainerId);
 const viewObserver = new ViewObserver(httpClient);
 const newsLoadBtn = document.querySelector('.load-news-btn');
-
-viewObserver.updateView('/sources', newsSourcesRenderer, 'sources');
+store.subscribe(renderTemplateData(newsSourcesContainerId, getNewsSourceTemplate, 'sources'));
+store.subscribe(renderTemplateData(newsItemsContainerId, getNewsCardTemplate, 'news'));
+viewObserver.updateView('/sources', {}, store, actions.fetchSources);
 
 const uploadNewsListAssets = () => {
   const sourceList = document.querySelector('.news-list');
@@ -22,8 +23,8 @@ const uploadNewsListAssets = () => {
   require.ensure([], (require) => {
     require('../scss/news-list.scss');
   }, null, 'news-list');
-  newsItemsRenderer.clearContainer();
-  viewObserver.updateView('/top-headlines', newsItemsRenderer, 'articles', requestParams);
+  // newsItemsRenderer.clearContainer();
+  viewObserver.updateView('/top-headlines', requestParams, store, actions.fetchNews);
 }
 
 newsLoadBtn.addEventListener('click', uploadNewsListAssets);
