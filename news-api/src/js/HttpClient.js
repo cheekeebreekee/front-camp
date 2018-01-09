@@ -1,8 +1,16 @@
 import { baseUrl, apiKey } from './constants.js';
 
+let instance = null;
+
 export default class HttpClient {
   constructor() {
+    if(!instance){
+      instance = this;
+    }
+
     this.params = '';
+
+    return instance;
   }
 
   createURL(url, params) {
